@@ -16,9 +16,8 @@ os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = QLibraryInfo.location(QLibraryInfo.P
 from core.pipeline import prepare_video, transcribe_selected
 
 
-# ======================
+
 # Worker Thread
-# ======================
 class Worker(QThread):
     progress = pyqtSignal(int)
     log = pyqtSignal(str)
@@ -34,9 +33,7 @@ class Worker(QThread):
             self.log.emit(f"❌ 에러: {str(e)}")
 
 
-# ======================
 # 메인 앱
-# ======================
 class App(QWidget):
     def __init__(self):
         super().__init__()
@@ -158,9 +155,7 @@ class App(QWidget):
             }
         """)
 
-    # ======================
     # 영상 선택
-    # ======================
     def select_video(self):
         file, _ = QFileDialog.getOpenFileName(
             self,
@@ -173,9 +168,7 @@ class App(QWidget):
             self.video_path = file
             self.label.setText(f"선택됨: {os.path.basename(file)}")
 
-    # ======================
     # 영상 분할
-    # ======================
     def split_video(self):
         if not self.video_path:
             self.text_area.setText("❗ 영상 먼저 선택하세요")
@@ -225,9 +218,7 @@ class App(QWidget):
 
         self.status_label.setText("✔ 분할 완료")
 
-    # ======================
     # 전체 추출
-    # ======================
     def run_all(self):
         if not self.job:
             self.text_area.setText("❗ 먼저 영상 분석하세요")
@@ -275,9 +266,7 @@ class App(QWidget):
 
         self.status_label.setText("✔ 전체 추출 완료")
 
-    # ======================
     # 선택 추출
-    # ======================
     def run_selected(self):
 
         if not self.job:
@@ -337,9 +326,7 @@ class App(QWidget):
 
         self.status_label.setText("✔ 선택 추출 완료")
 
-    # ======================
     # 전체 미리보기
-    # ======================
     def preview_full_text(self):
 
         if not self.full_txt_path:
@@ -371,9 +358,7 @@ class App(QWidget):
 
         dialog.exec_()
 
-    # ======================
     # chunk 미리보기
-    # ======================
     def preview_chunk(self, item):
 
         path = item.data(1)
@@ -412,9 +397,7 @@ class App(QWidget):
 
         dialog.exec_()
 
-    # ======================
     # UI 업데이트
-    # ======================
     def update_progress(self, value):
         self.progress_bar.setValue(value)
 
@@ -422,9 +405,7 @@ class App(QWidget):
         self.text_area.append(text)
 
 
-# ======================
 # 실행
-# ======================
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
